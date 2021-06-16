@@ -6,23 +6,11 @@ import {
 import Home from "./Home";
 import Main from "./Main";
 
-
-import firebase from 'firebase/app'
-
-import { useEffect } from "react";
+import LogIn from "./Login";
+import SignUp from "./SignUp";
+import Items from "./Items";
 
 export default function RouteWrapper() {
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyC58Wz_JcWoae7cJUgPSqRc-TOdI8NwNs4",
-        authDomain: "inventory-management-acfc9.firebaseapp.com",
-        projectId: "inventory-management-acfc9",
-        storageBucket: "inventory-management-acfc9.appspot.com",
-        messagingSenderId: "59396824809",
-        appId: "1:59396824809:web:f21714f7fd4446b7db1a78"
-      };
-    
-    useEffect(() => firebase.initializeApp(firebaseConfig), [])
 
     return (
         <Router>
@@ -30,8 +18,16 @@ export default function RouteWrapper() {
                 <Route path='/home'>
                     <Home />
                 </Route>
+                <Route path='/signup'>
+                    <Main>
+                        <SignUp />
+                    </Main>
+                </Route>
+                <Route path='/items/:category' component={Items} />
                 <Route path='/'>
-                    <Main />
+                    <Main>
+                        <LogIn />
+                    </Main>
                 </Route>
             </Switch>
         </Router>
