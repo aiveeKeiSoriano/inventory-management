@@ -5,6 +5,9 @@ import LogIn from "./Login";
 import SignUp from "./SignUp";
 
 import styled from "styled-components"; 
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -15,6 +18,17 @@ const Wrapper = styled.div`
 `
 
 export default function Main() {
+
+    
+    let user = useSelector(state => state.user)
+
+    let history = useHistory()
+
+    useEffect(() => {
+        if (user) {
+            history.push('/home')
+        }
+    }, [user])
     
     let logout = () => {
         firebase.auth().signOut().then(() => {

@@ -9,5 +9,7 @@ export default function Reducer(state = {}, action) {
             return { ...state, user: null, error: null }
         case SET_ERROR:
             return { ...state, error: action.payload }
+        default:
+            return state
     }
 } 

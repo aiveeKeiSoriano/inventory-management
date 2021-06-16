@@ -1,13 +1,10 @@
 
 
-import firebase from 'firebase/app'
-
-import "firebase/auth";
-
-
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
+import { logIn } from '../redux/actions/actions';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -23,21 +20,11 @@ export default function LogIn() {
     let emailRef = useRef()
     let passRef = useRef()
 
-    
-    let history = useHistory()
+
+    let dispatch = useDispatch()
 
     let login = async () => {
-        firebase.auth().signInWithEmailAndPassword(emailRef.current.value, passRef.current.value)
-        .then((userCredential) => {
-            var user = userCredential.user;
-            console.log(user)
-            history.push('/home')
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });
+        dispatch(logIn(emailRef.current.value, passRef.current.value))
     }
 
     return (
