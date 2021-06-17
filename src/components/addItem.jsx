@@ -5,9 +5,10 @@ import { addItem } from "../redux/actions/actions"
 
 
 const Wrapper = styled.div`
+    margin-right: auto;
     display: flex;
     flex-direction: column;
-    padding: 1em;
+    padding: 2em;
     height: 100%;
     background-color: aquamarine;
     gap: .5em;

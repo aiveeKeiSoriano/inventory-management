@@ -1,10 +1,11 @@
 
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import styled from "styled-components";
+import { checkLogin } from '../redux/actions/actions';
 import Nav from './Nav';
 
 const Wrapper = styled.div`
@@ -13,6 +14,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #f5f5f5;
 `
 
 const Content = styled.div`
@@ -42,22 +44,32 @@ const Content = styled.div`
             box-shadow: 2px 2px 10px #9e9e9ea6;
             padding: 1.5em;
             border-radius: 5px;
-            font-size: 1.2rem;  
+            font-size: 1.2rem;
+            background-color: white;
         }
     }
 `
 
 export default function Home() {
 
-    let user = useSelector(state => state.user)
+    let logged = useSelector(state => state.logged)
     let history = useHistory()
 
+    let dispatch = useDispatch()
+
     useEffect(() => {
-        if (!user) {
+        dispatch(checkLogin())
+        // eslint-disable-next-line
+    }, [])
+
+
+    useEffect(() => {
+        if (logged === false) {
             history.push('/')
         }
         // eslint-disable-next-line
-    }, [user])
+    }, [logged])
+    
 
     const categories = ['mobiles', 'laptops', 'appliances']
 

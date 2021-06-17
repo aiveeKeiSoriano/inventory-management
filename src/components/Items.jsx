@@ -2,14 +2,14 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import styled from "styled-components"
-import { deleteItem, getItems } from "../redux/actions/actions"
+import { checkLogin, deleteItem, getItems } from "../redux/actions/actions"
 import AddItem from "./addItem"
 import Nav from "./Nav"
 
 
 const Wrapper = styled.div`
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,6 +19,8 @@ const Content = styled.div`
     display: flex;
     flex: 1;
     height: 100%;
+    width: 100%;
+    overflow: hidden;
 
     img {
         width: 200px;
@@ -30,6 +32,11 @@ const Content = styled.div`
         display: flex;
         flex-direction: column;
         gap: 1em;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         h1 {
             text-transform: capitalize;
@@ -52,15 +59,21 @@ export default function Items(props) {
     let dispatch = useDispatch()
     let items = useSelector(state => state.items)
 
-    let user = useSelector(state => state.user)
+    let logged = useSelector(state => state.logged)
     let history = useHistory()
 
     useEffect(() => {
-        if (!user) {
+        dispatch(checkLogin())
+        // eslint-disable-next-line
+    }, [])
+
+
+    useEffect(() => {
+        if (logged === false) {
             history.push('/')
         }
         // eslint-disable-next-line
-    }, [user])
+    }, [logged])
 
     useEffect(() => dispatch(getItems(category))
     // eslint-disable-next-line
@@ -70,11 +83,11 @@ export default function Items(props) {
         <Wrapper>
             <Nav />
             <Content>
+                <AddItem category={category} />
                 <div className="items">
                     <h1>{category}</h1>
                     {items.map(item => <Item item={item} category={category} />)}
                 </div>
-                <AddItem category={category} />
             </Content>
         </Wrapper>
     )

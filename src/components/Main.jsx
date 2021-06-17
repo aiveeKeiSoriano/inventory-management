@@ -1,8 +1,9 @@
 
 import styled from "styled-components"; 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { checkLogin } from '../redux/actions/actions'
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -15,16 +16,23 @@ const Wrapper = styled.div`
 
 export default function Main({children}) {
 
-    let user = useSelector(state => state.user)
+    let logged = useSelector(state => state.logged)
 
     let history = useHistory()
 
+    let dispatch = useDispatch()
+
     useEffect(() => {
-        if (user) {
+        if (logged) {
             history.push('/home')
         }
         // eslint-disable-next-line
-    }, [user])
+    }, [logged])
+
+    useEffect(() => {
+        dispatch(checkLogin())
+        // eslint-disable-next-line
+    }, [])
     
 
     return (
