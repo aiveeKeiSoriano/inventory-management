@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: aquamarine;
+    background-color: #348899;
 `
 
 export default function Main({children}) {

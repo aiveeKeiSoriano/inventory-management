@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: #F2EBC7;
 `
 
 const Content = styled.div`
@@ -41,11 +41,18 @@ const Content = styled.div`
 
         .category {
             width: 100%;
-            box-shadow: 2px 2px 10px #9e9e9ea6;
+            box-shadow: 2px 2px 10px #03030332;
             padding: 1.5em;
             border-radius: 5px;
             font-size: 1.2rem;
             background-color: white;
+            border-left: 5px solid #962D3E;
+            transition: background-color 100ms ease;
+
+            &:hover {
+                background-color: #962D3E;
+                color: white;
+            }
         }
     }
 `

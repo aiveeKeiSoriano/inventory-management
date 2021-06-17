@@ -7,10 +7,14 @@ import { logOut } from '../redux/actions/actions';
 const Wrapper = styled.div`
     width: 100%;
     padding: 1em;
-    background-color: #4b4be0;
+    background-color: #348899;
     color: white;
     display: flex;
     justify-content: space-between;
+
+    h1 {
+        color: white;
+    }
 
     button {
         background-color: transparent;

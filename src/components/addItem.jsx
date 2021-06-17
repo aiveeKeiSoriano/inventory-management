@@ -5,31 +5,60 @@ import { addItem } from "../redux/actions/actions"
 
 
 const Wrapper = styled.div`
-    margin-right: auto;
+    margin-left: auto;
     display: flex;
     flex-direction: column;
     padding: 2em;
     height: 100%;
-    background-color: aquamarine;
+    background-color: #962D3E;
     gap: .5em;
+    color: white;
+
+    h2 {
+        color: white;
+    }
 
     label {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 5px;  
+        gap: 5px;
+        color: white;
 
         input {
-            height: 2em;
+            height: 2.5em;
+            border: none;
+            padding: 0em .5em;
+            border-radius: 5px;
+            border: 2px solid #9899a157;
+
+            &:focus {
+                outline: none;
+                border: 2px solid #343642;
+            }
+
+            &:hover {
+                border: 2px solid #343642;
+            }
         }
     }
 
     button {
-        background-color: #4b4be0;
+        margin-top: 1em;
+        background-color: #348899;
         color: white;
-        font-size: 1rem;
+        font-size: 1.1rem;
         border: none;
-        padding: .5em;
+        padding: .7em 1.8em;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px #00000071;
+
+        &:hover {
+            background-color: #296b79;
+        }
     }
+
 `
 
 export default function AddItem({ category }) {
@@ -71,7 +100,7 @@ export default function AddItem({ category }) {
             <label>Quantity
             <input type="number" ref={quantity} />
             </label>
-            <button onClick={add}>Add</button>
+            <button onClick={add}>Save</button>
         </Wrapper>
     )
 }

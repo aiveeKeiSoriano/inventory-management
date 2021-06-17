@@ -8,40 +8,62 @@ import { logIn } from '../redux/actions/actions';
 
 const Wrapper = styled.div`
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
-    padding: 1em;
-    background-color: white;
+    padding: 3em 2em;
+    background-color: #F2EBC7;
     box-shadow: 2px 2px 10px #666666a6;
     border-radius: 10px;
-    gap: 1rem;
+    gap: 1.5em;
+    align-items: center;
     
     h1 {
-        align-self: center;
-        color: #4b4be0;
+        color: #962D3E;
     }
 
     label {
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 5px;  
 
         input {
-            height: 2em;
+            height: 2.5em;
+            border: none;
+            padding: 0em .5em;
+            border-radius: 5px;
+            border: 2px solid #9899a1;
+
+            &:focus {
+                outline: none;
+                border: 2px solid #343642;
+            }
+
+            
+            &:hover {
+                border: 2px solid #343642;
+            }
         }
     }
 
     button {
-        background-color: #4b4be0;
+        background-color: #962D3E;
         color: white;
         font-size: 1rem;
         border: none;
-        padding: .5em;
+        padding: .8em 2em;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #7c2432;
+        }
     }
 
     a {
-        color: #4b4be0;
+        font-size: .9rem;
+        color: #962D3E;
     }
 `
 

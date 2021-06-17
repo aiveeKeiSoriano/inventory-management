@@ -1,11 +1,11 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import styled from "styled-components"
 import { checkLogin, deleteItem, getItems } from "../redux/actions/actions"
 import AddItem from "./addItem"
 import Nav from "./Nav"
-
+import defaultImage from '../images/default.png'
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -22,13 +22,9 @@ const Content = styled.div`
     width: 100%;
     overflow: hidden;
 
-    img {
-        width: 200px;
-    }
-
     .items {
         flex: 1;
-        padding: 2em;
+        padding: 1em 2em;
         display: flex;
         flex-direction: column;
         gap: 1em;
@@ -44,13 +40,76 @@ const Content = styled.div`
     }
 
     .item {
+        display: flex;
+        width: 100%;
+        height: 200px;
+        gap: 1.5em;
+        align-items: center;
+        padding: 1em;
+
+        .img-container {
+            height: 100%;
+            width: 200px;
+            display: flex;
+            justify-content: center;
+
+            img {
+                max-width: 200px;
+                object-fit: contain;
+            }
+        }
+
         button {
-        background-color: #4b4be0;
-        color: white;
-        font-size: 1rem;
-        border: none;
-        padding: .5em;
-    }
+            margin-left: auto;
+            align-self: flex-start;
+            background-color: #962D3E;
+            color: white;
+            font-size: .9rem;
+            border: none;
+            padding: .5em 1em;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #7c2432;
+            }
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            max-width: 500px;
+
+            .desc {
+                font-style: italic;
+            }
+
+            .price {
+                font-weight: 700;
+            }
+
+            .quantity {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100px;
+                justify-content: space-evenly;
+                margin-top: .5em;
+                
+                button {
+                    height: 30px;
+                    width: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0;
+                }
+            }
+
+        }
+
+        
     }
 `
 
@@ -76,36 +135,44 @@ export default function Items(props) {
     }, [logged])
 
     useEffect(() => dispatch(getItems(category))
-    // eslint-disable-next-line
-    , [])
+        // eslint-disable-next-line
+        , [])
 
     return (
         <Wrapper>
             <Nav />
             <Content>
-                <AddItem category={category} />
                 <div className="items">
                     <h1>{category}</h1>
-                    {items.map(item => <Item item={item} category={category} />)}
+                    {items.map(item => <Item key={item.name + Math.random()} item={item} category={category} />)}
                 </div>
+                <AddItem category={category} />
             </Content>
         </Wrapper>
     )
 }
 
-function Item({item, category}) {
+function Item({ item, category }) {
     let dispatch = useDispatch()
+
+    let [image, setImage] = useState(item.image)
 
     return (
         <div className="item">
-            <img src={item.image} alt="" />
-            <div className="details">
-                <h1>{item.name}</h1>
-                <p>{item.description}</p>
-                <p>Price: ${item.price}</p>
-                <p>Quanttiy: {item.quantity}</p>
-                <button onClick={() => dispatch(deleteItem(category, item.id))}>Delete</button>
+            <div className="img-container">
+                <img src={image} alt="" onError={() => setImage(defaultImage)} />
             </div>
+            <div className="details">
+                <h2>{item.name}</h2>
+                <p className='desc'>{item.description}</p>
+                <p className='price'>Price: ${item.price}</p>
+                <div className="quantity">
+                    <button>-</button>
+                    <p>{item.quantity}</p>
+                    <button>+</button>
+                </div>
+            </div>
+            <button onClick={() => dispatch(deleteItem(category, item.id))}>Delete</button>
         </div>
     )
 }
