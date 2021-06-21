@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import styled from "styled-components"
-import { checkLogin, deleteItem, getItems } from "../redux/actions/actions"
+import { changeQuantity, checkLogin, deleteItem, getItems } from "../redux/actions/actions"
 import AddItem from "./addItem"
 import Nav from "./Nav"
 import defaultImage from '../images/default.png'
@@ -144,7 +144,7 @@ export default function Items(props) {
             <Content>
                 <div className="items">
                     <h1>{category}</h1>
-                    {items.map(item => <Item key={item.name + Math.random()} item={item} category={category} />)}
+                    {items.map(item => <Item key={item.id} item={item} category={category} />)}
                 </div>
                 <AddItem category={category} />
             </Content>
@@ -167,9 +167,13 @@ function Item({ item, category }) {
                 <p className='desc'>{item.description}</p>
                 <p className='price'>Price: ${item.price}</p>
                 <div className="quantity">
-                    <button>-</button>
+                    <button onClick={() => {
+                        if (item.quantity > 0) {
+                            dispatch(changeQuantity('decrease', item.id, category))
+                        }
+                    }}> -</button>
                     <p>{item.quantity}</p>
-                    <button>+</button>
+                    <button onClick={() => dispatch(changeQuantity('increase', item.id, category))}>+</button>
                 </div>
             </div>
             <button onClick={() => dispatch(deleteItem(category, item.id))}>Delete</button>

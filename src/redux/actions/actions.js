@@ -2,7 +2,7 @@
 import firebase from 'firebase/app'
 import "firebase/auth";
 import databaseRef from '../../firebase-config';
-import { ITEMS_RETRIEVED, LOGGED_OUT, SET_ERROR, USER_RETRIEVED } from './action_types';
+import { CHANGE_QUANTITY, ITEMS_RETRIEVED, LOGGED_OUT, SET_ERROR, USER_RETRIEVED } from './action_types';
 
 
 export const userRetrieved = (user) => ({
@@ -22,6 +22,11 @@ export const loggedOut = () => ({
 export const itemsRetrieved = (items) => ({
     type: ITEMS_RETRIEVED,
     payload: items
+})
+
+export const changeQuantityDisplay = (op, id) => ({
+    type: CHANGE_QUANTITY,
+    payload: {op, id}
 })
 
 export const signUp = (email, password) => {
@@ -109,5 +114,19 @@ export const addItem = (category, item) => {
         }).catch((error) => {
             console.error("Error adding document: ", error);
         })
+    }
+}
+
+export const changeQuantity = (op, id, category) => {
+    return async (dispatch) => {
+        const increment = firebase.firestore.FieldValue.increment(1);
+        const decrement = firebase.firestore.FieldValue.increment(-1);
+        if (op === 'increase') {
+             await databaseRef.collection(category).doc(id).update({quantity: increment})
+        }
+        else if (op === 'decrease') {
+            await databaseRef.collection(category).doc(id).update({quantity: decrement})
+        }
+        dispatch(changeQuantityDisplay(op, id))
     }
 }

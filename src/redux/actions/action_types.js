@@ -7,3 +7,5 @@ export const SET_ERROR = 'SET_ERROR'
 export const LOGGED_OUT = 'LOGGED_OUT'
 
 export const ITEMS_RETRIEVED = 'ITEMS_RETRIEVED'
+
+export const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
