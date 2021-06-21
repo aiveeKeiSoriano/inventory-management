@@ -2,11 +2,11 @@
 
 import "firebase/auth";
 
-import { useRef } from "react";
-import { useDispatch } from 'react-redux';
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
-import { signUp } from '../redux/actions/actions';
+import { setError, signUp } from '../redux/actions/actions';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -66,6 +66,13 @@ const Wrapper = styled.div`
         font-size: .9rem;
         color: #962D3E;
     }
+
+    .error {
+        font-size: .9rem;
+        color: red;
+        text-align: center;
+        line-height: 1;
+    }
 `
 
 export default function SignUp() {
@@ -73,16 +80,28 @@ export default function SignUp() {
     let emailRef = useRef()
     let passRef = useRef()
     let confirmPassRef = useRef()
+    
+    let error = useSelector(state => state.error)
 
     let dispatch = useDispatch()
 
     let signup = async () => {
-        dispatch(signUp(emailRef.current.value, passRef.current.value))
+        if (passRef.current.value === confirmPassRef.current.ref) {
+            dispatch(signUp(emailRef.current.value, passRef.current.value))
+        }
+        else {
+            dispatch(setError("Passwords do not match"))
+        }
     }
+
+    useEffect(() => 
+    dispatch(setError(null)),
+    [])
 
     return (
         <Wrapper>
             <h1>Sign Up</h1>
+            <p className='error'>{error}</p>
             <label>Email
             <input type="text" ref={emailRef} />
             </label>

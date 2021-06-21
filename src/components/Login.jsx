@@ -1,10 +1,10 @@
 
 
-import { useRef } from "react";
-import { useDispatch } from 'react-redux';
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { logIn } from '../redux/actions/actions';
+import { logIn, setError } from '../redux/actions/actions';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -65,6 +65,13 @@ const Wrapper = styled.div`
         font-size: .9rem;
         color: #962D3E;
     }
+
+    .error {
+        font-size: .9rem;
+        color: red;
+        text-align: center;
+        line-height: 1;
+    }
 `
 
 
@@ -72,7 +79,7 @@ export default function LogIn() {
 
     let emailRef = useRef()
     let passRef = useRef()
-
+    let error = useSelector(state => state.error)
 
     let dispatch = useDispatch()
 
@@ -80,9 +87,14 @@ export default function LogIn() {
         dispatch(logIn(emailRef.current.value, passRef.current.value))
     }
 
+    useEffect(() => 
+    dispatch(setError(null)),
+    [])
+
     return (
         <Wrapper>
             <h1>Log In</h1>
+            <p className='error'>{error}</p>
             <label>Email
             <input type="text" ref={emailRef} />
             </label>

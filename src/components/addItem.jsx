@@ -71,6 +71,14 @@ export default function AddItem({ category }) {
 
     let dispatch = useDispatch()
 
+    let resetForm = () => {
+        name.current.value = null
+        desc.current.value = null
+        price.current.value = null
+        image.current.value = null
+        quantity.current.value = null
+    }
+
     let add = () => {
         let item = {
             name: name.current.value,
@@ -80,6 +88,7 @@ export default function AddItem({ category }) {
             quantity: quantity.current.value
         }
         dispatch(addItem(category, item))
+        resetForm()
     }
 
     return (
