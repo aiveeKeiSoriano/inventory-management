@@ -88,7 +88,8 @@ export default function LogIn() {
     }
 
     useEffect(() => 
-    dispatch(setError(null)),
+        dispatch(setError(null)),
+        // eslint-disable-next-line
     [])
 
     return (

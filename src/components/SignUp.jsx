@@ -96,6 +96,7 @@ export default function SignUp() {
 
     useEffect(() => 
     dispatch(setError(null)),
+    // eslint-disable-next-line
     [])
 
     return (
